@@ -6,7 +6,7 @@ on:
       godot-version:
         required: true
         type: string
-        default: '4.3.0'
+        default: '4.3'
       export-name:
         required: true
         type: string
@@ -37,7 +37,7 @@ jobs:
       - name: 🧪 Execute Tests
         uses: ./.github/actions/godot-run-tests
         with:
-          godot-version: ${{ inputs.godot-version }}
+          godot-version: 4.3
         
   build:
     name: 🔨 Build Game
