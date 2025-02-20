@@ -45,19 +45,6 @@ jobs:
         - name: 🔬 Verify Setup
           run: |
               godot --version
-    
-        - name: 📥 Install rcedit
-          run: |
-            wget https://github.com/electron/rcedit/releases/download/v1.1.1/rcedit-x64.exe
-            mkdir -p ~/.local/share/godot/editor
-            mv rcedit-x64.exe ~/.local/share/godot/editor/rcedit.exe
-
-        - name: Update export preset
-          run: |
-            if [ -f "export_presets.cfg" ]; then
-              echo 'application/modify_resources=true' >> export_presets.cfg
-              echo 'application/rcedit="~/.local/share/godot/editor/rcedit.exe"' >> export_presets.cfg
-            fi
 
         - name: 🛠️ Build Game
           run: |
