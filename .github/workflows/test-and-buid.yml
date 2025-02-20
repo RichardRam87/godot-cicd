@@ -1,0 +1,59 @@
+name: 🎮 Test and Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      godot-version:
+        required: true
+        type: string
+        default: '4.3'
+      export-name:
+        required: true
+        type: string
+        default: 'Game Title'
+      project-path:
+        required: false
+        type: string
+        default: '.' # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
+      build-type:
+        type: choice
+        description: debug or release build
+        options:
+          - debug
+          - release
+        
+jobs:
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: 🧪 Execute Tests
+        uses: ./.github/actions/godot-test
+        with:
+          godot-version: ${{ inputs.godot-version }}
+        
+  build:
+    name: 🔨 Build Game
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Build Project
+        uses: ./.github/actions/godot-build
+        with:
+          godot-version: ${{ inputs.godot-version }}
+          export-name: ${{ inputs.export-name }}
+          build-type: ${{ inputs.build-type }}
+          project-path: ${{ inputs.project-path }}
+      
+      - name: 📦 Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-${{ inputs.build-type }}
+          path: build/windows 
+

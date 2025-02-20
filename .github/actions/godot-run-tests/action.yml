@@ -1,0 +1,27 @@
+name: 🎮 Godot Run Test
+description: 🧪 Runs GDUnit4 tests for Godot projects
+
+inputs:
+  godot-version:
+    description: '🔢 Godot version to use'
+    required: true
+    default: '4.3'
+  test-path:
+    description: '📁 Path to test directory'
+    required: false
+    default: 'res://tests/'
+  timeout:
+    description: '⏱️ Test timeout in minutes'
+    required: false
+    default: '5'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: MikeSchulze/gdUnit4-action@v1.1.5
+      name: 🧪 Execute Tests
+      with:
+        godot-version: ${{ inputs.godot-version }}
+        paths: ${{ inputs.test-path }}
+        timeout: ${{ inputs.timeout }}
+        report-name: test_report.xml
