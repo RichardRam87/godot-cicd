@@ -41,14 +41,18 @@ jobs:
             version: 4.3.0
             use-dotnet: false
             include-templates: true
-
         
         - name: 🔬 Verify Setup
           run: |
               godot --version
     
+        - name: 📥 Install rcedit
+          run: |
+            wget https://github.com/electron/rcedit/releases/download/v1.1.1/rcedit-x64.exe
+            mkdir -p ~/.local/share/godot/editor
+            mv rcedit-x64.exe ~/.local/share/godot/editor/rcedit.exe
+            
         - name: 🛠️ Build Game
-          
           run: |
             mkdir -v -p ./builds/${{ matrix.platform }}/${{ matrix.type }}/
             godot --headless --verbose --export-${{ matrix.type }} ${{ matrix.platform }} ./builds/${{ matrix.platform }}/${{ matrix.type }}/game
