@@ -1,15 +1,16 @@
 name: cicd-pipeline
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
+  push:
 
 env:
   GODOT_VERSION: 4.3
   EXPORT_NAME: test-project
 
-permissions:
-    checks: write
-    contents: read
+# permissions:
+    # checks: write
+    # contents: read
 
 jobs:
   test:
