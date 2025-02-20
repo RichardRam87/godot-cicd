@@ -4,9 +4,11 @@ on:
   workflow_dispatch:
   push:
 
+# NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 env:
   GODOT_VERSION: 4.3
   EXPORT_NAME: test-project
+  PROJECT_PATH: .
 
 # permissions:
     # checks: write
