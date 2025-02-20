@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: 🧪 Execute Tests
-        uses: ./.github/actions/godot-test
+        uses: ./.github/actions/godot-run-tests
         with:
           godot-version: ${{ inputs.godot-version }}
         
@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 🛠️ Build Project
-        uses: ./.github/actions/godot-build
+        uses: ./.github/actions/godot-create-build
         with:
           godot-version: ${{ inputs.godot-version }}
           export-name: ${{ inputs.export-name }}
