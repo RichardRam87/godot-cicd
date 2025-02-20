@@ -3,7 +3,11 @@ name: 🎮 Test and Build
 on:
   workflow_dispatch:
     inputs:
-      godot-version:
+      godot-version-long:
+        required: true
+        type: string
+        default: '4.3.0'
+      godot-version-short:
         required: true
         type: string
         default: '4.3'
@@ -26,6 +30,8 @@ permissions:
   checks: write
   contents: read
 
+
+
 jobs:
   test:
     name: 🧪 Run Tests
@@ -37,7 +43,7 @@ jobs:
       - name: 🧪 Execute Tests
         uses: ./.github/actions/godot-run-tests
         with:
-          godot-version: 4.3
+          godot-version: ${{ inputs.godot-version-short }}
         
   build:
     name: 🔨 Build Game
@@ -50,7 +56,7 @@ jobs:
       - name: 🛠️ Build Project
         uses: ./.github/actions/godot-create-build
         with:
-          godot-version: ${{ inputs.godot-version }}
+          godot-version: ${{ inputs.godot-version-godot-version-long }}
           export-name: ${{ inputs.export-name }}
           build-type: ${{ inputs.build-type }}
           project-path: ${{ inputs.project-path }}
