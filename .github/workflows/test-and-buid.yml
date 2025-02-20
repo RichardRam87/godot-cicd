@@ -56,7 +56,7 @@ jobs:
       - name: 🛠️ Build Project
         uses: ./.github/actions/godot-create-build
         with:
-          godot-version: ${{ inputs.godot-version-godot-version-long }}
+          godot-version: ${{ inputs.godot-version-long }}
           export-name: ${{ inputs.export-name }}
           build-type: ${{ inputs.build-type }}
           project-path: ${{ inputs.project-path }}
