@@ -10,9 +10,9 @@ env:
   EXPORT_NAME: test-project
   PROJECT_PATH: .
 
-# permissions:
-    # checks: write
-    # contents: read
+permissions:
+  checks: write
+  contents: read
 
 jobs:
   test:
