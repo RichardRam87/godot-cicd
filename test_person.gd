@@ -9,4 +9,4 @@ func _init(first_name :String, last_name :String):
 	_last_name = last_name
 
 func full_name() -> String:
-	return _first_name + " " + _last_name
+	return " " + _last_name
