@@ -24,8 +24,8 @@ inputs:
 
 runs:
   using: docker
-  container:
-    image: barichello/godot-ci:4.3
+  image: barichello/godot-ci:4.3
+  
   steps:
     - name: 🛠️ Setup Environment
       shell: bash
