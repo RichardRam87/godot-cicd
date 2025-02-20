@@ -3,6 +3,10 @@ name: cicd-pipeline
 on:
     workflow_dispatch:
 
+permissions:
+    checks: write
+    contents: read
+    
 jobs:
   test:
     name: Run Tests
