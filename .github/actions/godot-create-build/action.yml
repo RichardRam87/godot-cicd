@@ -2,8 +2,12 @@ name: 🎮 Godot Create Build
 description: 🔨 Builds Godot project for specified platform
 
 inputs:
-  godot-version:
-    description: '🔢 Godot version to use'
+  godot-version-long:
+    description: '🔢 Godot version to use long x.y.z'
+    required: true
+    default: '4.3.0'
+  godot-version-short:
+    description: '🔢 Godot version to use long x.y'
     required: true
     default: '4.3'
   export-name:
@@ -20,7 +24,7 @@ inputs:
 
 runs:
   using: docker
-  image: barichello/godot-ci:${{ inputs.godot-version }}
+  image: barichello/godot-ci:${{ inputs.godot-version-short }}
   steps:
     - name: 🛠️ Setup Environment
       shell: bash
@@ -28,7 +32,7 @@ runs:
         mkdir -v -p ~/.local/share/godot/export_templates/
         mkdir -v -p ~/.config/
         mv /root/.config/godot ~/.config/godot
-        mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+        mv /root/.local/share/godot/export_templates/${{ inputs.godot-version-long}}.stable ~/.local/share/godot/export_templates/${{ inputs.godot-version-long}}.stable
     
     - name: 🔨 Build Game
       shell: bash
