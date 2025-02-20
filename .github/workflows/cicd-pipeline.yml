@@ -9,15 +9,48 @@ permissions:
 
 jobs:
   test:
-    name: Run Tests
+    name: 🧪Run Tests
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v4
           name: 🧾 Checkout
 
         - uses: MikeSchulze/gdUnit4-action@v1.1.5
+          name: 🔬 execute tests
           with:
             godot-version: '4.3'
             paths: 'res://tests/'
             timeout: 5
-            report-name: test_report.xml     
+            report-name: test_report.xml 
+
+  build:
+    needs: test
+    name: Build Game
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [windows]
+        type: [debug]
+    steps:
+        - uses: actions/checkout@v4
+          name: 🧾 Checkout
+          
+        - uses: chickensoft-games/setup-godot@v1
+          name: 🤖 Setup Godot
+          with:
+            version: 4.3.0
+            use-dotnet: false
+        
+        - name: 🔬 Verify Setup
+          run: |
+              godot --version
+    
+        - name: 🛠️ Build Game
+          run: |
+          godot --headless --export-${{ matrix.type }} ${{ matrix.platform }} ./builds/${{ matrix.platform }}/${{ matrix.type }}/game
+          
+        - name: Upload Build Artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: game-${{ matrix.platform }}-${{ matrix.type }}
+            path: ./builds/${{ matrix.platform }}/${{ matrix.type }}
