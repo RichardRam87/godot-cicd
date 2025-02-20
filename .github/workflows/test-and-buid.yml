@@ -6,7 +6,7 @@ on:
       godot-version:
         required: true
         type: string
-        default: '4.3'
+        default: '4.3.0'
       export-name:
         required: true
         type: string
@@ -25,7 +25,7 @@ on:
 permissions:
   checks: write
   contents: read
-  
+
 jobs:
   test:
     name: 🧪 Run Tests
