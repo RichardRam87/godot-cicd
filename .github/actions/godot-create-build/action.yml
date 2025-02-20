@@ -24,7 +24,7 @@ inputs:
 
 runs:
   using: docker
-  image: barichello/godot-ci:${{ inputs.godot-version-short }}
+  image: barichello/godot-ci:4.3
   steps:
     - name: 🛠️ Setup Environment
       shell: bash
