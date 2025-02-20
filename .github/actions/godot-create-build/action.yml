@@ -24,7 +24,8 @@ inputs:
 
 runs:
   using: docker
-  image: barichello/godot-ci:4.3
+  container:
+    image: barichello/godot-ci:4.3
   steps:
     - name: 🛠️ Setup Environment
       shell: bash
@@ -32,7 +33,7 @@ runs:
         mkdir -v -p ~/.local/share/godot/export_templates/
         mkdir -v -p ~/.config/
         mv /root/.config/godot ~/.config/godot
-        mv /root/.local/share/godot/export_templates/${{ inputs.godot-version-long}}.stable ~/.local/share/godot/export_templates/${{ inputs.godot-version-long}}.stable
+        mv /root/.local/share/godot/export_templates/${{} inputs.godot-version-long }}.stable ~/.local/share/godot/export_templates/${{ inputs.godot-version-long}}.stable
     
     - name: 🔨 Build Game
       shell: bash
