@@ -1,4 +1,4 @@
-name: cicd-pipelin
+name: cicd-pipeline
 
 on:
     workflow_dispatch:
@@ -21,7 +21,7 @@ jobs:
           run: |
               godot --version
 
-        - uses: MikeSchulze/gdUnit4-action@v1.1.5
+        - uses: MikeSchulze/gdUnit4-action@v1
           with:
             godot-version: '4.3.0'
             paths: |
