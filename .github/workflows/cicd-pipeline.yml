@@ -25,7 +25,7 @@ jobs:
 
   build:
     # needs: test - commented for now for faster test iteration
-    name: 🛠️ Build Game
+    name: 🛠️ git Build Game
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -48,7 +48,9 @@ jobs:
               godot --version
     
         - name: 🛠️ Build Game
+          
           run: |
+            mkdir -v -p ./builds/${{ matrix.platform }}/${{ matrix.type }}/
             godot --headless --verbose --export-${{ matrix.type }} ${{ matrix.platform }} ./builds/${{ matrix.platform }}/${{ matrix.type }}/game
           
         - name: Upload Build Artifact
