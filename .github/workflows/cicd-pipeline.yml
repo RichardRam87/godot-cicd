@@ -1,0 +1,22 @@
+name: cicd-pipelin
+
+on:
+    workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+          name: 🧾 Checkout
+
+        - uses: chickensoft-games/setup-godot@v2
+          name: 🤖 Setup Godot
+          with:
+            version: 4.3
+            use-dotnet: false
+        
+        - name: 🔬 Verify Setup
+          run: |
+              godot --version
