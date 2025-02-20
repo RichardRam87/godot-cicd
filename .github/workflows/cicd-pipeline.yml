@@ -16,7 +16,7 @@ jobs:
           name: 🧾 Checkout
 
         - uses: MikeSchulze/gdUnit4-action@v1.1.5
-          name: 🔬 execute tests
+          name: 🔬 Execute Tests
           with:
             godot-version: '4.3'
             paths: 'res://tests/'
@@ -24,7 +24,7 @@ jobs:
             report-name: test_report.xml 
 
   build:
-    needs: test
+    # needs: test - commented for now for faster test iteration
     name: Build Game
     runs-on: ubuntu-latest
     strategy:
@@ -40,6 +40,8 @@ jobs:
           with:
             version: 4.3.0
             use-dotnet: false
+            include-templates: true
+
         
         - name: 🔬 Verify Setup
           run: |
