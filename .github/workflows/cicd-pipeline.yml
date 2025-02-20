@@ -47,7 +47,7 @@ jobs:
     
         - name: 🛠️ Build Game
           run: |
-          godot --headless --export-${{ matrix.type }} ${{ matrix.platform }} ./builds/${{ matrix.platform }}/${{ matrix.type }}/game
+            godot --headless --verbose --export-${{ matrix.type }} ${{ matrix.platform }} ./builds/${{ matrix.platform }}/${{ matrix.type }}/game
           
         - name: Upload Build Artifact
           uses: actions/upload-artifact@v4
