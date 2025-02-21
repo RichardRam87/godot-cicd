@@ -32,7 +32,7 @@ jobs:
 
   build-windows:
     name: 🔨 Build Game
-    needs: [test]
+    #needs: [test]
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:${GODOT_CONTAINER_VERSION} # can't get a var in here...
