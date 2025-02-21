@@ -7,6 +7,15 @@ on:
         required: true
         type: string
         description: 'Build type (debug/release)'
+  workflow_dispatch:
+    inputs:
+      build-type:
+        type: choice
+        options:
+          - debug
+          - release
+        description: 'Build type (debug/release)'
+          
 
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 env:

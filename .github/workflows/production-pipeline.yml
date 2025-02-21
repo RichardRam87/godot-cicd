@@ -7,10 +7,10 @@ on:
 permissions:
   checks: write
   contents: read
-  
+
 jobs:
   build-and-test:
-    name: 🎲 Release Build
+    name: 🎲 Test And Build Release
     uses: ./.github/workflows/test-and-build.yml
     with:
       build-type: 'release'
