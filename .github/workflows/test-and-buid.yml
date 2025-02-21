@@ -4,11 +4,9 @@ on:
   workflow_call:
     inputs:
       build-type:
+        required: true
         type: string
-        description: '🏗️ Build type (debug/release)'
-        required: false
-        default: 'debug'
-
+        description: 'Build type (debug/release)'
 
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 env:
@@ -59,10 +57,10 @@ jobs:
           mkdir -v -p build/windows
           EXPORT_DIR="$(readlink -f build)"
           cd ${{ env.PROJECT_PATH }}
-          godot --headless --verbose --export-debug "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
+          godot --headless --verbose --export-${{ inputs.build-type }} "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
       
       - name: 📦 Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows
+          name: windows-${{ inputs.build-type }}
           path: build/windows

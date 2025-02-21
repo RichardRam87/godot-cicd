@@ -1,0 +1,12 @@
+name: 🚀 Production Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test-and-build:
+    name: 🎲 Release Build
+    uses: ./.github/workflows/test-and-build.yml
+    with:
+      build-type: 'release'
