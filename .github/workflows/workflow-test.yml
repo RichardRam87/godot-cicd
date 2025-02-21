@@ -1,0 +1,10 @@
+name: My Test
+
+on:
+  push:
+
+jobs:
+  test-and-build:
+    uses: ./.github/workflows/test-and-build.yml
+    with:
+      build-type: 'debug'

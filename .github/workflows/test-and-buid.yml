@@ -1,12 +1,18 @@
 name: 🎮 Test and Build
 
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      build-type:
+        type: string
+        description: '🏗️ Build type (debug/release)'
+        required: false
+        default: 'debug'
+
 
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 env:
   GODOT_VERSION: 4.3
-  GODOT_CONTAINER_VERSION: '4.3'
   EXPORT_NAME: test-project
   PROJECT_PATH: .
 
@@ -32,10 +38,10 @@ jobs:
 
   build-windows:
     name: 🔨 Build Game
-    #needs: [test]
+    needs: [test]
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:${GODOT_CONTAINER_VERSION} # can't get a var in here...
+      image: barichello/godot-ci:4.3 # can't get a var in here...
 
     steps:
       - name: 📥 Checkout Repository
