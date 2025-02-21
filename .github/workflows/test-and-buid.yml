@@ -2,68 +2,60 @@ name: 🎮 Test and Build
 
 on:
   workflow_dispatch:
-    inputs:
-      godot-version-long:
-        required: true
-        type: string
-        default: '4.3.0'
-      godot-version-short:
-        required: true
-        type: string
-        default: '4.3'
-      export-name:
-        required: true
-        type: string
-        default: 'Game Title'
-      project-path:
-        required: false
-        type: string
-        default: '.' # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
-      build-type:
-        type: choice
-        description: debug or release build
-        options:
-          - debug
-          - release
-        
+
+# NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
+env:
+  GODOT_VERSION: 4.3
+  EXPORT_NAME: test-project
+  PROJECT_PATH: .
+
 permissions:
   checks: write
   contents: read
 
-
-
 jobs:
   test:
-    name: 🧪 Run Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout Repository
-        uses: actions/checkout@v4
-      
-      - name: 🧪 Execute Tests
-        uses: ./.github/actions/godot-run-tests
-        with:
-          godot-version: ${{ inputs.godot-version-short }}
-        
-  build:
-    name: 🔨 Build Game
-    #needs: [test]
+    name: 🧪Run Tests
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 🛠️ Build Project
-        uses: ./.github/actions/godot-create-build
+      - name: 🔬 Execute Tests
+        uses: MikeSchulze/gdUnit4-action@v1.1.5
         with:
-          godot-version: ${{ inputs.godot-version-long }}
-          export-name: ${{ inputs.export-name }}
-          build-type: ${{ inputs.build-type }}
-          project-path: ${{ inputs.project-path }}
+          godot-version: ${GODOT_VERSION}
+          paths: 'res://tests/'
+          timeout: 5
+          report-name: test_report.xml 
+
+  build-windows:
+    name: 🔨 Build Game
+    needs: [test]
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3 # can't get a var in here...
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+    
+      - name: 🛠️ Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+        
+      - name: 🛠️ Windows Build
+        run: |
+          mkdir -v -p build/windows
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-debug "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
       
-      - name: 📦 Upload Build Artifacts
+      - name: 📦 Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows-${{ inputs.build-type }}
-          path: build/windows 
-
+          name: windows
+          path: build/windows
