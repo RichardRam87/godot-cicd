@@ -6,7 +6,7 @@ on:
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 env:
   GODOT_VERSION: 4.3
-  TEST_VAR: '4.3'
+  GODOT_CONTAINER_VERSION: '4.3'
   EXPORT_NAME: test-project
   PROJECT_PATH: .
 
@@ -25,7 +25,7 @@ jobs:
       - name: 🔬 Execute Tests
         uses: MikeSchulze/gdUnit4-action@v1.1.5
         with:
-          godot-version: ${GODOT_VERSION}
+          godot-version: ${{ env.GODOT_VERSION }}
           paths: 'res://tests/'
           timeout: 5
           report-name: test_report.xml 
@@ -35,7 +35,7 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:${TEST_VAR} # can't get a var in here...
+      image: barichello/godot-ci:${GODOT_CONTAINER_VERSION} # can't get a var in here...
 
     steps:
       - name: 📥 Checkout Repository
@@ -46,13 +46,13 @@ jobs:
           mkdir -v -p ~/.local/share/godot/export_templates/
           mkdir -v -p ~/.config/
           mv /root/.config/godot ~/.config/godot
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
         
       - name: 🛠️ Windows Build
         run: |
           mkdir -v -p build/windows
           EXPORT_DIR="$(readlink -f build)"
-          cd $PROJECT_PATH
+          cd ${{ env.PROJECT_PATH }}
           godot --headless --verbose --export-debug "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
       
       - name: 📦 Upload Artifact
