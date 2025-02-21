@@ -5,6 +5,4 @@ on:
 
 jobs:
   test-and-build:
-    uses: ./.github/workflows/test-and-build.yml
-    with:
-      build-type: 'debug'
+    uses: /.github/workflows/test-and-build.yml
