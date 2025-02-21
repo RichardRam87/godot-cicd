@@ -6,6 +6,7 @@ on:
 # NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
 env:
   GODOT_VERSION: 4.3
+  TEST_VAR: '4.3'
   EXPORT_NAME: test-project
   PROJECT_PATH: .
 
@@ -34,7 +35,7 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.3 # can't get a var in here...
+      image: barichello/godot-ci:${TEST_VAR} # can't get a var in here...
 
     steps:
       - name: 📥 Checkout Repository
