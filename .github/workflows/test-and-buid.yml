@@ -35,7 +35,7 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:$GODOT_CONTAINER_VERSION # can't get a var in here...
+      image: barichello/godot-ci:${GODOT_CONTAINER_VERSION} # can't get a var in here...
 
     steps:
       - name: 📥 Checkout Repository
